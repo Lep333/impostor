@@ -1,5 +1,6 @@
 package com.example.impostor
 
+import android.R
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,8 +26,10 @@ import kotlin.getValue
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.ui.geometry.Offset
@@ -39,13 +42,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-
-@Composable
-fun GameScreen(players: List<String>) {
-    Text("Hello from the Game Screen!")
-}
+import androidx.compose.ui.unit.sp
+import com.example.impostor.ui.theme.Pink40
+import com.example.impostor.ui.theme.Purple40
+import ir.ehsannarmani.compose_charts.RowChart
+import ir.ehsannarmani.compose_charts.models.BarProperties
+import ir.ehsannarmani.compose_charts.models.Bars
+import ir.ehsannarmani.compose_charts.models.DividerProperties
+import ir.ehsannarmani.compose_charts.models.GridProperties
+import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
+import ir.ehsannarmani.compose_charts.models.LabelProperties
+import ir.ehsannarmani.compose_charts.models.LineProperties
 
 @Composable
 fun PublicScreen(
@@ -64,6 +77,19 @@ fun PublicScreen(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .width(150.dp)
+                            .height(30.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(MaterialTheme.colorScheme.secondary),
+                    )
+                }
                 Button(
                     onClick = {
                     privateInformation(playerName)
@@ -86,13 +112,14 @@ fun PublicScreen(
 
 @Composable
 fun PrivateScreen(
-    currIndex: Int, currPlayer: String, currImpostorIndex: Int,
+    currIndex: Int, players: List<String>, currImpostorIndex: Int,
     currSecret: String, nextPlayer: () -> Unit) {
+    val playerName = players.getOrElse(currIndex, { "" })
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column {
             Row {
                 Text(
-                    text = "voll geheim hier $currPlayer...",
+                    text = "$playerName ist an der Reihe",
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )
@@ -104,6 +131,7 @@ fun PrivateScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(30.dp)
                     )
                 } else {
                     Text(
@@ -111,6 +139,7 @@ fun PrivateScreen(
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
+                            .height(30.dp)
                     )
                 }
             }
@@ -132,7 +161,7 @@ fun PrivateScreen(
 @Composable
 fun BlankScreen(viewModel: GameViewModel, transitionFunction: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text("Pass the device to the next player")
+        Text("Bitte Handy weitergeben")
     }
     LaunchedEffect(Unit) {
         delay(500)
@@ -150,13 +179,15 @@ fun RoundFinished(viewModel: GameViewModel, votingScreen: () -> Unit) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
             )
-            players.forEach { name ->
-                Row {
-                    Text(
-                        text = name,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
+            Column {
+                players.forEach { name ->
+                    Row {
+                        Text(
+                            text = name,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
+                    }
                 }
             }
             Button(
@@ -181,7 +212,9 @@ fun VotingScreen(
     val currIndex = viewModel.currIndex
     if (viewModel.currIndex < players.size) {
         val currPlayer = players[currIndex]
-        Box(modifier = Modifier.fillMaxSize().padding(16.dp), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp), contentAlignment = Alignment.Center) {
             Column {
                 Text(
                     text = "$currPlayer stimmt ab",
@@ -211,121 +244,6 @@ fun VotingScreen(
         }
     } else {
         endScreenTransition()
-    }
-}
-
-@Composable
-fun EndScreen(viewModel: GameViewModel, menuTransition: () -> Unit) {
-    val votingResult = viewModel.voting
-    val imposterIndex = viewModel.currImpostorIndex
-    val players = viewModel.players
-    val impostorName = players[imposterIndex]
-    val currSecret = viewModel.currSecret
-    var resultText by remember { mutableStateOf("") }
-    var guess by remember { mutableStateOf("") }
-    var guessDone by remember { mutableStateOf(false) }
-
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Column {
-            Text(
-                text = "Der Impostor war $impostorName",
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth(),
-            )
-            var votedImpostor: String = ""
-            var voteCount: Int = 0
-            votingResult.forEach { (key, votes) ->
-                if (votes > voteCount) {
-                    votedImpostor = key
-                    voteCount = votes
-                }
-                Row {
-                    Text(
-                        text = "$key: $votes",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            }
-            if (votedImpostor == impostorName) {
-                Row {
-                    Text(
-                        text = "Der Impostor $impostorName wurde richtig erkannt!",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                Row {
-                    Text(
-                        text = "Der Impostor kann noch gewinnen, wenn er den gesuchten Begriff richtig errät.",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                Row {
-                    TextField(
-                        value = guess,
-                        onValueChange = { it: String -> guess = it},
-                        label = { Text("Gesuchter Begriff") },
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                Row {
-                    if (!guessDone) {
-                        Button(
-                            onClick = {
-                                resultText = if (currSecret.lowercase() == guess.lowercase()) {
-                                    "Der Begriff wurde richtig geraten"
-                                } else {
-                                    "Geraten wurde $guess, der Begriff war $currSecret"
-                                }
-                                guessDone = true
-                            },
-                            shape = RoundedCornerShape(7.dp),
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Text("Begriff Raten")
-                        }
-                    } else {
-                        Button(
-                            onClick = {
-                                menuTransition()
-                            },
-                            shape = RoundedCornerShape(7.dp),
-                            modifier = Modifier.fillMaxWidth(),
-                        ) {
-                            Text("Weiter")
-                        }
-                    }
-                }
-                Row {
-                    Text(
-                        text = resultText,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-            } else {
-                Row {
-                    Text(
-                        text = "Fälschlich beschuldigt wurde $votedImpostor!",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth(),
-                    )
-                }
-                Row {
-                    Button(
-                        onClick = {
-                            menuTransition()
-                        },
-                        shape = RoundedCornerShape(7.dp),
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text("Weiter")
-                    }
-                }
-            }
-        }
     }
 }
 

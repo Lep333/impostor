@@ -43,4 +43,11 @@ class GameViewModel: ViewModel() {
     fun vote(key: String) {
         voting[key] = (voting[key]?: 0) + 1
     }
+
+    fun resetGame() {
+        currPlayer = ""
+        currIndex = 0
+        currSecret = ""
+        voting = mutableMapOf<String, Int>()
+    }
 }

@@ -43,4 +43,6 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_game">Game</string>
+    <string name="title_activity_words">Words</string>
+    <string name="title_activity_end_screen">EndScreen</string>
 </resources>

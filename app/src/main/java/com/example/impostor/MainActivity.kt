@@ -3,11 +3,13 @@ package com.example.impostor
 import android.os.Bundle
 import android.renderscript.ScriptGroup
 import android.text.InputType
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -39,15 +41,25 @@ import com.example.impostor.ui.theme.ImpostorTheme
 import androidx.navigation.compose.NavHost
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavHostController
+import com.example.impostor.ui.theme.Pink40
+import com.example.impostor.ui.theme.Pink80
+import com.example.impostor.ui.theme.Purple40
+import com.example.impostor.ui.theme.Purple80
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +69,10 @@ class MainActivity : ComponentActivity() {
             val navController: NavHostController = rememberNavController()
             val navBackStackEntry = remember { navController.currentBackStackEntry }
             val viewModel: GameViewModel by viewModels()
-            ImpostorTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            ImpostorTheme (darkTheme = true) {
+                Scaffold(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Pink40)) { innerPadding ->
                     NavHost(
                         navController = navController,
                         startDestination = "Start",
@@ -67,8 +81,7 @@ class MainActivity : ComponentActivity() {
                         composable("Start") {
                             MenuScreen(
                                 startGame = {
-                                    val secretWords = listOf("Aal", "Brötchen", "Bier")
-                                    viewModel.updateCurrSecret(secretWords.random())
+                                    viewModel.updateCurrSecret(words.random())
                                     viewModel.updatePlayers(it)
                                     viewModel.updateCurrImpostorIndex()
                                     navController.navigate("PublicScreen")
@@ -93,7 +106,7 @@ class MainActivity : ComponentActivity() {
                         composable("PrivateScreen") {
                             PrivateScreen(
                                 viewModel.currIndex,
-                                currPlayer = viewModel.currPlayer,
+                                players = viewModel.players,
                                 viewModel.currImpostorIndex,
                                 viewModel.currSecret,
                                 {
@@ -131,6 +144,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("EndScreen") {
                             EndScreen(viewModel, {
+                                viewModel.resetGame()
                                 navController.navigate("Start")
                             })
                         }
@@ -145,11 +159,13 @@ class MainActivity : ComponentActivity() {
 fun MenuScreen(startGame: (SnapshotStateList<String>) -> Unit, viewModel: GameViewModel, modifier: Modifier = Modifier) {
     var playerName by remember { mutableStateOf("") }
     var playerList = viewModel.players
+    val context = LocalContext.current
+
     Column (Modifier.padding(16.dp)) {
         Text (
             text = "Impostor",
             textAlign = TextAlign.Center,
-            modifier = modifier,
+            modifier = Modifier.fillMaxWidth(),
             fontSize = 80.sp,
             lineHeight = 116.sp
         )
@@ -166,38 +182,64 @@ fun MenuScreen(startGame: (SnapshotStateList<String>) -> Unit, viewModel: GameVi
             Spacer(modifier = Modifier.width(16.dp))
             Button(
                 onClick = {
-                    playerList.add(playerName)
-                    println(playerList)
-                    playerName = ""
+                    if (playerName != "" && playerName !in playerList) {
+                        playerList.add(playerName)
+                        playerName = ""
+                    } else {
+                        Toast.makeText(context, "Bitte keine Duplikate/leere Namen eingeben", Toast.LENGTH_SHORT).show()
+                    }
                           },
                 shape = RoundedCornerShape(7.dp),
-                modifier = Modifier.weight(4f)
+                modifier = Modifier
+                    .weight(4f)
                     .fillMaxSize()
-            ) { Text("Spieler hinzufügen") }
+            ) { Text(
+                text = "Spieler hinzufügen",
+                textAlign = TextAlign.Center,
+            ) }
         }
-        playerList.forEach { name ->
-            Row {
-                Button (
-                    onClick = { playerList.remove(name) },
-                    shape = RoundedCornerShape(7.dp),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                ) {
+        Spacer(Modifier.height(10.dp))
+        if (playerList.isNotEmpty()) {
+            Column (
+                modifier = Modifier
+                    .border(width = 2.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(7.dp))
+                    .padding(16.dp)
+            ) {
+                Row {
                     Text(
-                        text = name,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center
+                        "Spieler",
+                        modifier = Modifier,
                     )
+                }
+                playerList.forEach { name ->
+                    Row {
+                        Button(
+                            onClick = { playerList.remove(name) },
+                            shape = RoundedCornerShape(7.dp),
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = name,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
         }
+        Spacer(Modifier.height(10.dp))
         Row {
             Button(
                 onClick =
                     {
-                        viewModel.updateCurrIndex(0)
-                        startGame(playerList)
+                        if (playerList.size > 2) {
+                            viewModel.updateCurrIndex(0)
+                            startGame(playerList)
+                        } else {
+                            Toast.makeText(context, "Imposter benötigt mindestens 3 Spieler", Toast.LENGTH_SHORT).show()
+                        }
                     },
                 shape = RoundedCornerShape(7.dp),
                 modifier = Modifier.fillMaxWidth()

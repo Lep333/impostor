@@ -12,6 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Impostor">
         <activity
+            android:name=".EndScreen"
+            android:exported="false"
+            android:label="@string/title_activity_end_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".Words"
+            android:exported="false"
+            android:label="@string/title_activity_words"
+            android:theme="@style/Theme.Impostor" />
+        <activity
             android:name=".Game"
             android:exported="false"
             android:label="@string/title_activity_game"
