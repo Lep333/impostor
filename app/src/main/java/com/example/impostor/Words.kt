@@ -14,95 +14,55 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.impostor.ui.theme.ImpostorTheme
 
 val words = listOf(
-    "Roman", "Erzählung", "Kapitel", "Absatz", "Satz", "Wort", "Buchstabe", "Grammatik", "Rechtschreibung", "Lesung",
-    "Fabel", "Märchen", "Essay", "Biografie", "Bibliothek", "Verlag", "Autor", "Leserin", "Literatur", "Genre",
-    "Zitat", "Poesie", "Reim", "Metapher", "Symbol", "Stilmittel", "Redewendung", "Synonym",
-    "Umschlag", "Klappentext", "Inhaltsverzeichnis", "Fußnote", "Druck", "Handschrift", "Tinte", "Papier",
-    "Schreibmaschine", "Manuskript", "Kritiker", "Bestseller", "Buchhandlung", "Schreibtisch",
+    // Alltag
+    "Tisch", "Stuhl", "Glas", "Teller", "Löffel", "Tasse", "Lampe", "Sofa", "Buch", "Ball",
+    "Schuh", "Jacke", "Hose", "Fenster", "Tür", "Bett", "Kissen", "Decke", "Teppich", "Schrank",
+    "Messer", "Gabel", "Topf", "Pfanne", "Uhr", "Bild", "Radio", "Handy", "Münze", "Becher",
+    "Korb", "Blume", "Pflanze", "Seife", "Bürste", "Spiegel", "Kerze", "Schere", "Stift", "Papier",
+    "Tuch", "Sack", "Nagel", "Stein", "Stock", "Seil", "Reifen", "Eimer", "Lappen",
 
-    "Superheld", "Schurke", "Maske", "Cape", "Heft", "Sprechblase", "Zeichnung",
-    "Ausgabe", "Verkleidung", "Geheimidentität",
-    "Mutanten", "Abenteuer", "Parodie", "Karikatur", "Action", "Explosion",
-    "Geschichte", "Superkraft", "Kostüm", "Universum", "Gegner", "Zeichner", "Szene",
-    "Charakter", "Zeitreise", "Transformation",
+    // Mehr Alltag
+    "Vogel", "Fisch", "Auto", "Baum", "Haus", "Hund", "Katze", "Brot", "Apfel", "Ei",
+    "Hand", "Fuß", "Kopf", "Ohr", "Auge", "Nase", "Mund", "Zahn", "Haar", "Bein",
+    "Arm", "Herz", "Ring", "Tasche", "Schlüssel", "Hut", "Kleid", "Rock", "Zug", "Schiff",
+    "Boot", "Decke", "Becher", "Kerze", "Messer",
 
-    "Spielwelt", "Controller", "Maus", "Tastatur", "Monitor", "Headset", "Konsole", "Mission",
-    "Endgegner", "Charakter", "Fähigkeit", "Waffe", "Munition", "Rüstung",
-    "Grafik", "Dialog", "Server", "Trophäe", "Rangliste", "Arena",
-    "Simulation", "Strategie", "Puzzle", "Gegner",
+    // Tiere
+    "Hund", "Katze", "Vogel", "Fisch", "Kuh", "Schaf", "Pferd", "Hase", "Maus", "Bär",
+    "Frosch", "Adler", "Esel", "Ente", "Fuchs", "Gans", "Igel", "Känguru", "Krabbe", "Löwe",
+    "Otter", "Rabe", "Reh", "Schlange", "Spatz", "Tiger", "Wolf", "Zebra", "Ameise", "Biene",
+    "Eule", "Falke", "Garnele", "Huhn", "Krokodil", "Qualle", "Ratte", "Schmetterling", "Schwein",
+    "Taube", "Wal", "Wurm", "Ziege", "Kranich", "Luchs", "Marder", "Mücke", "Papagei", "Pfau",
 
-    "iPod", "SMS", "Klingelton", "Discman", "MP3",
-    "Röhrenbildschirm", "Festival", "Bluetooth", "Y2K", "Skateboard",
-    "Tattoo", "Piercing",
-    "Poster", "Diashow", "Chat", "Selfie", "Emo",
-    "Schulranzen", "Parfüm", "Brille", "Modem",
+    // Freizeitgegenstände
+    "Ball", "Buch", "Stift", "Brett", "Karte", "Würfel", "Uhr", "Spiel", "Film", "Filmrolle",
+    "Kamera", "Angel", "Rucksack", "Zelt", "Kappe", "Decke", "Kissen", "Fahrrad", "Skateboard",
+    "Roller", "Schlauch", "Schal", "Seil", "Tasche", "Radio", "Musik", "Foto", "Mikrofon", "Helm",
+    "Brille", "Kette", "Armband", "Zigarre", "Kugel", "Stuhl", "Kamm", "Schlüssel", "Lampe", "Hantel",
+    "Schaufel", "Korb", "Ballon", "Spielzeug", "Stab", "Sprung", "Tuch",
 
-    "Wald", "Wiese", "Baum", "Strauch", "Busch", "Blume", "Blatt", "Moos", "Pilz", "Schmetterling",
-    "Biene", "Vogel", "Fuchs", "Reh", "Eichhörnchen", "Ameise", "Erde", "Rinde", "Wurzel", "Ast",
-    "Zweig", "Tannenzapfen", "Lichtung", "Wanderweg", "Aussicht", "Natur", "Himmel", "Sonne", "Regen", "Nebel",
-    "Wind", "Wolke", "Zelt", "Lagerfeuer", "Hängematte", "Fernglas", "Rucksack", "Picknick", "Quelle",
-    "Wassertropfen", "Teich", "Bach", "Felsen", "Klee", "Distel", "Wildblume", "Insekt", "Pfad", "Wanderweg",
-    "Hund", "Katze", "Pferd", "Kuh", "Schwein", "Schaf", "Ziege", "Huhn", "Gans", "Ente",
-    "Esel", "Kaninchen", "Hamster", "Meerschweinchen", "Ratte", "Maus", "Fuchs", "Wolf", "Bär", "Luchs",
-    "Igel", "Dachs", "Marder", "Otter", "Reh", "Hirsch", "Wildschwein", "Mufflon", "Feldhase", "Waschbär",
-    "Frosch", "Kröte", "Salamander", "Molch", "Schlange", "Eidechse", "Chamäleon", "Krokodil", "Alligator", "Schildkröte",
-    "Adler", "Falke", "Eule", "Uhu", "Specht", "Schwalbe", "Taube", "Amsel", "Spatz", "Storch",
+    // Essen
+    "Apfel", "Brot", "Käse", "Fisch", "Reis", "Ei", "Milch", "Salz", "Zucker", "Honig",
+    "Butter", "Öl", "Fleisch", "Huhn", "Tomate", "Zwiebel", "Knoblauch", "Kartoffel", "Salat", "Pilz",
+    "Orange", "Banane", "Traube", "Melone", "Nuss", "Keks", "Kuchen", "Suppe", "Joghurt", "Kaffee",
+    "Tee", "Saft", "Wasser", "Pizza", "Pasta", "Gemüse", "Obst", "Wurst", "Schokolade", "Soße",
+    "Speck", "Bohne", "Mais", "Lachs",
 
-    "Apfel", "Birne", "Banane", "Orange", "Erdbeere", "Traube", "Salat", "Tomate", "Gurke", "Paprika",
-    "Karotte", "Kartoffel", "Brokkoli", "Spinat", "Zwiebel", "Knoblauch", "Brot",
-    "Butter", "Käse", "Joghurt", "Milch", "Sahne", "Quark", "Ei", "Wurst", "Schinken",
-    "Fisch", "Reis", "Nudeln", "Pizza", "Burger", "Suppe", "Kuchen", "Keks",
-    "Schokolade", "Bonbon", "Eis", "Saft", "Tee", "Kaffee", "Wasser", "Bier", "Wein",
+    // Technik
+    "Kabel", "Motor", "Sensor", "Chip", "Akku", "Lüfter", "Stecker", "Drucker", "Monitor", "Bildschirm",
+    "Tastatur", "Maus", "Antenne", "Lampe", "Gerät", "Router", "Kamera", "Mikrofon", "Lautsprecher", "Schalter",
+    "Netzteil", "Batterie", "Drohne", "Roboter", "Satellit", "Prozessor", "Festplatte", "Speicher", "Scanner", "USB",
+    "Server", "Tablet", "Smartphone", "Fernbedienung", "Fernseher", "Platine", "Steuerung", "Adapter", "Transistor", "Elektrode",
+    "Transformator", "Kondensator", "Diode",
 
-    // Glaube & Religion
-    "Kirche", "Tempel", "Moschee", "Synagoge", "Altar", "Glocke",
-    "Gebet", "Ritual", "Taufe", "Gottesdienst", "Fasten", "Kreuz",
-    "Engel", "Teufel", "Heilige", "Papst", "Priester", "Mönch", "Nonne", "Imam", "Rabbi",
-    "Segen", "Beichte", "Chor", "Gemeinde", "Kloster", "Ikone", "Glaube",
-    "Schöpfung", "Jenseits", "Himmel", "Hölle", "Paradies", "Wiedergeburt",
+    // Fortbewegungsmittel
+    "Auto", "Boot", "Zug", "Rad", "Bus", "Taxi", "Schiff", "Flug", "Kanu", "Jeep",
+    "LKW", "Moped", "Motorrad", "Roller", "Traktor", "Wagen", "Fähre", "Kutsche", "Hubschrauber", "Fahrrad",
+    "E-Bike", "Straßenbahn", "U-Bahn", "Segel", "Ruder", "Flugzeug", "Helikopter", "E-Scooter", "Skate",
 
-    // Im Labor
-    "Reagenzglas", "Bunsenbrenner", "Pipette", "Trichter", "Waage", "Mikroskop",
-    "Thermometer", "Rührgerät", "Kühlschrank", "Schutzbrille",
-    "Handschuhe", "Kittel", "Chemikalie", "Substanz", "Lösung", "Reaktion", "Analyse", "Versuch",
-    "Experiment", "Formel", "Protokoll", "Diagramm", "Skizze", "DNA", "Zelle", "Molekül",
-    "Bakterium", "Virus", "Kultur", "Probe", "Dosierung", "Forschung",
-
-    // Kinofilme
-    "Film", "Kamera", "Drehbuch", "Schauspieler", "Szene", "Kulisse", "Studio",
-    "Kostüm", "Maske", "Schminke", "Ton", "Mikrofon", "Licht",
-    "Schnitt", "Effekte", "Musik",
-    "Festival", "Zuschauer", "Popcorn", "Ticket", "Reservierung",
-    "Komödie", "Drama",
-
-    // Kunst & Kultur
-    "Malerei", "Zeichnung", "Skulptur", "Fotografie", "Farbe", "Pinsel",
-    "Galerie", "Ausstellung", "Museum", "Kunstwerk",
-    "Schatten", "Licht",
-    "Performance", "Theater", "Bühne", "Aufführung", "Schauspiel",
-    "Tanz", "Orchester", "Musik", "Denkmal", "Kreativität",
-
-    // Körper & Geist
-    "Körper", "Geist", "Gehirn", "Herz", "Lunge", "Magen", "Sinne", "Auge", "Ohr", "Nase", "Haut", "Mund",
-    "Gedanke", "Gefühl", "Emotion", "Bewusstsein", "Reflex", "Schmerz", "Freude", "Angst", "Stress",
-    "Entspannung", "Ruhe", "Schlaf", "Traum", "Denken", "Erinnerung", "Konzentration",
-    "Identität", "Verstand", "Trieb", "Wille", "Erkenntnis", "Erfahrung",
-
-    // Macht & Geld
-    "Geld", "Macht", "Einfluss", "Reichtum", "Vermögen", "Kapital", "Bank", "Kredit", "Zins", "Schuld",
-    "Börse", "Aktie", "Anleihe", "Münze", "Schein", "Lohn", "Gehalt", "Einnahme",
-    "Ausgabe", "Gewinn", "Verlust", "Budget", "Konto", "Überweisung", "Finanzamt", "Steuer",
-    "Bestechung", "Korruption", "Herrschaft", "Unternehmen",
-    "Minister", "Wirtschaft", "Bankrott", "Spende",
-
-    // Medien & Unterhaltung
-    "Nachricht", "Zeitung", "Radio", "Fernsehen",
-    "Interview", "Bericht", "Kommentar", "Podcast",
-    "Reichweite", "Skandal", "Gerücht", "Netzwerk", "Algorithmus",
-    "Reaktion", "Trend", "Meme",
-
-    // Musik & Hits
-    "Musik", "Lied", "Takt", "Note", "Album",
-    "Lautsprecher",
-    "Verstärker", "Kopfhörer",
+    // Landschaftsbegriffe
+    "Berg", "Tal", "Wald", "See", "Fluss", "Hügel", "Wiese", "Strand", "Sand", "Felsen",
+    "Moor", "Sumpf", "Klippe", "Düne", "Teich", "Quelle", "Acker", "Flur", "Hain", "Bach",
+    "Gletscher", "Fjord", "Schlucht", "Steppe", "Oase", "Vulkan", "Plateau", "Höhle", "Kamm",
+    "Busch", "Baum", "Gras", "Ebene", "Meer", "Küste", "Geysir", "Wasserfall", "Stein", "Kessel", "Mulde"
 )
