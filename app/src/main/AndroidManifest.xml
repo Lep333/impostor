@@ -12,6 +12,41 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Impostor">
         <activity
+            android:name=".App"
+            android:exported="false"
+            android:label="@string/title_activity_app"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".VotingScreen"
+            android:exported="false"
+            android:label="@string/title_activity_voting_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".PlayOrderScreen"
+            android:exported="false"
+            android:label="@string/title_activity_play_order_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".BlankScreen"
+            android:exported="false"
+            android:label="@string/title_activity_blank_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".MenuScreen"
+            android:exported="false"
+            android:label="@string/title_activity_menu_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".PrivateScreen"
+            android:exported="false"
+            android:label="@string/title_activity_private_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
+            android:name=".PublicScreen"
+            android:exported="false"
+            android:label="@string/title_activity_public_screen"
+            android:theme="@style/Theme.Impostor" />
+        <activity
             android:name=".EndScreen"
             android:exported="false"
             android:label="@string/title_activity_end_screen"

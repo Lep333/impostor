@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: impostor
-          path: app/build/outputs/apk/debug/impostor.apk
+          path: app/build/outputs/apk/debug/app-debug.apk

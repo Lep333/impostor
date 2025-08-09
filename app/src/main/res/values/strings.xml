@@ -45,4 +45,11 @@
     <string name="title_activity_game">Game</string>
     <string name="title_activity_words">Words</string>
     <string name="title_activity_end_screen">EndScreen</string>
+    <string name="title_activity_public_screen">PublicScreen</string>
+    <string name="title_activity_private_screen">PrivateScreen</string>
+    <string name="title_activity_menu_screen">MenuScreen</string>
+    <string name="title_activity_blank_screen">BlankScreen</string>
+    <string name="title_activity_play_order_screen">PlayOrderScreen</string>
+    <string name="title_activity_voting_screen">VotingScreen</string>
+    <string name="title_activity_app">App</string>
 </resources>
