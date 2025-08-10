@@ -38,6 +38,21 @@ android {
         compose = true
         viewBinding = true
     }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("my-release-key.keystore") // inside app/
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
 }
 
 dependencies {
