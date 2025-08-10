@@ -19,17 +19,27 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Decode keystore from secret
+      # Decode keystore from base64 secret into app/ directory
       - name: Decode Keystore
-        run: echo -n "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/my-release-key.keystore
+        run: |
+          echo -n "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/my-release-key.keystore
+          ls -l app/my-release-key.keystore
+          file app/my-release-key.keystore
+
+      # Fail early if keystore not found
+      - name: Verify Keystore Exists
+        run: |
+          if [ ! -f app/my-release-key.keystore ]; then
+            echo "ERROR: Keystore file not found!"
+            exit 1
+          fi
 
       - name: Build Signed Release APK
-        run: |
-          ./gradlew assembleRelease \
-            -Pandroid.injected.signing.store.file=my-release-key.keystore \
-            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleRelease \
+          -Pandroid.injected.signing.store.file=app/my-release-key.keystore \
+          -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
+          -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
+          -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
 
       - name: Create GitHub Release
         id: create_release
