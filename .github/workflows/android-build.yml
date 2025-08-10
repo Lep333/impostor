@@ -19,12 +19,9 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # Decode keystore from base64 secret into app/ directory
       - name: Decode Keystore
         run: |
           echo -n "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > my-release-key.keystore
-          ls -l app/my-release-key.keystore
-          file app/my-release-key.keystore
 
       # Fail early if keystore not found
       - name: Verify Keystore Exists
