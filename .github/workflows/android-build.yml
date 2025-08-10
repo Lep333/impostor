@@ -22,7 +22,7 @@ jobs:
       # Decode keystore from base64 secret into app/ directory
       - name: Decode Keystore
         run: |
-          echo -n "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/my-release-key.keystore
+          echo -n "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > my-release-key.keystore
           ls -l app/my-release-key.keystore
           file app/my-release-key.keystore
 
