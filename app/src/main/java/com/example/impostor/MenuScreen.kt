@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.sin
 
 @Composable
 fun MenuScreen(startGame: (SnapshotStateList<String>) -> Unit, viewModel: GameViewModel, modifier: Modifier = Modifier) {
@@ -50,7 +51,9 @@ fun MenuScreen(startGame: (SnapshotStateList<String>) -> Unit, viewModel: GameVi
                 value = playerName,
                 onValueChange = { it: String -> playerName = it },
                 label = { Text("Spieler Name") },
-                modifier = Modifier.weight(6f)
+                modifier = Modifier.weight(6f),
+                maxLines = 1,
+                singleLine = true,
             )
             Spacer(modifier = Modifier.width(16.dp))
             Button(
@@ -109,6 +112,7 @@ fun MenuScreen(startGame: (SnapshotStateList<String>) -> Unit, viewModel: GameVi
                     {
                         if (playerList.size > 2) {
                             viewModel.updateCurrIndex(0)
+                            viewModel.randomizePlayerList()
                             startGame(playerList)
                         } else {
                             Toast.makeText(context, "Imposter benötigt mindestens 3 Spieler", Toast.LENGTH_SHORT).show()

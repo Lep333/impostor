@@ -15,7 +15,9 @@ class GameViewModel: ViewModel() {
     fun updatePlayers(newPlayers: SnapshotStateList<String>) {
         players = newPlayers
     }
-
+    fun randomizePlayerList() {
+        players.shuffle()
+    }
     var currPlayer by mutableStateOf<String>("")
     fun updateCurrPlayer(newCurrPlayer: String) {
         currPlayer = newCurrPlayer

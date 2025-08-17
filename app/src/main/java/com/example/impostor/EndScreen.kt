@@ -8,21 +8,26 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.input.ImeAction
 
 @Composable
 fun EndScreen(viewModel: GameViewModel, menuTransition: () -> Unit) {
@@ -52,15 +57,16 @@ fun EndScreen(viewModel: GameViewModel, menuTransition: () -> Unit) {
 
 @Composable
 fun ImpostorDetected(impostorName: String, currSecret: String, menuTransition: () -> Unit) {
-    var resultText by remember { mutableStateOf("") }
+    val resultText = remember { mutableStateOf("") }
     var guess by remember { mutableStateOf("") }
     var guessDone by remember { mutableStateOf(false) }
-    var resultMessage by remember { mutableStateOf("") }
+    val resultMessage = remember { mutableStateOf("") }
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     if (guessDone) {
         Row {
             Text(
-                text = resultMessage,
+                text = resultMessage.value,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,6 +119,18 @@ fun ImpostorDetected(impostorName: String, currSecret: String, menuTransition: (
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
+                keyboardOptions = KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        submitImpostorInput(resultText, resultMessage, impostorName, currSecret, guess)
+                        keyboardController?.hide()
+                        guessDone = true
+                    }
+                ),
+                maxLines = 1,
+                singleLine = true,
             )
         }
     }
@@ -120,13 +138,7 @@ fun ImpostorDetected(impostorName: String, currSecret: String, menuTransition: (
         if (!guessDone) {
             Button(
                 onClick = {
-                    if (currSecret.lowercase() == guess.lowercase()) {
-                        resultText = "$impostorName hat $currSecret erraten!"
-                        resultMessage = "$impostorName hat gewonnen!"
-                    } else {
-                        resultText = "$impostorName hat $guess geraten, der Begriff war $currSecret."
-                        resultMessage = "$impostorName hat verloren!"
-                    }
+                    submitImpostorInput(resultText, resultMessage, impostorName, currSecret, guess)
                     guessDone = true
                 },
                 shape = RoundedCornerShape(7.dp),
@@ -140,7 +152,7 @@ fun ImpostorDetected(impostorName: String, currSecret: String, menuTransition: (
             Column {
                 Row {
                     Text(
-                        text = resultText,
+                        text = resultText.value,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -218,5 +230,21 @@ fun ImpostorWon(
         ) {
             Text("Weiter")
         }
+    }
+}
+
+fun submitImpostorInput(
+    resultText: MutableState<String>,
+    resultMessage: MutableState<String>,
+    impostorName: String,
+    currSecret: String,
+    guess: String
+) {
+    if (currSecret.lowercase() == guess.lowercase()) {
+        resultText.value = "$impostorName hat $currSecret erraten!"
+        resultMessage.value = "$impostorName hat gewonnen!"
+    } else {
+        resultText.value = "$impostorName hat $guess geraten, der Begriff war $currSecret."
+        resultMessage.value = "$impostorName hat verloren!"
     }
 }

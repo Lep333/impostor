@@ -1,0 +1,101 @@
+[33mcommit 3c116d1ba11114621399049f1855b89ea270f924[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;33mtag: [m[1;33mv2.2[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 12:30:25 2025 +0200
+
+    Another fix...
+
+[33mcommit 40f322b5b9eb13bd1ee3b766a8eb4adf369e5225[m[33m ([m[1;33mtag: [m[1;33mv2.1[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 11:42:34 2025 +0200
+
+    Next...
+
+[33mcommit bbf17d9dd469c3659f9058edbe0624175d9a87da[m[33m ([m[1;33mtag: [m[1;33mv2.0[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 11:27:41 2025 +0200
+
+    Lets try...
+
+[33mcommit 87498c9257a2f58b120e81a96a9d721769c186ac[m[33m ([m[1;33mtag: [m[1;33mv1.9[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 11:26:12 2025 +0200
+
+    Fixing CD
+
+[33mcommit 51be4b2c9bef12f4abd125311e5cf50955a5f5a1[m[33m ([m[1;33mtag: [m[1;33mv1.8[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 11:23:52 2025 +0200
+
+    ...
+
+[33mcommit 6d2d009cd4ec9859b2eeb581218fe98380c2b56c[m[33m ([m[1;33mtag: [m[1;33mv1.7[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 11:08:21 2025 +0200
+
+    Still Fixing CD
+
+[33mcommit 36f42d050b995f5a6964505cc2b1bee25b3a2e5d[m[33m ([m[1;33mtag: [m[1;33mv1.6[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sun Aug 10 10:53:47 2025 +0200
+
+    Still fixing CD
+
+[33mcommit 440724c4dcf23116f82c947bb4897d3e21743f67[m[33m ([m[1;33mtag: [m[1;33mv1.5[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 22:08:58 2025 +0200
+
+    Maybe this time?
+
+[33mcommit cd617f1a25f8426aa1e7be911f583724fe3175db[m[33m ([m[1;33mtag: [m[1;33mv1.4[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 22:00:29 2025 +0200
+
+    Fixing release workflow.
+
+[33mcommit 4bbd82b4bd2b0f8640f3c84f6ef49be049edba14[m[33m ([m[1;33mtag: [m[1;33mv1.3[m[33m, [m[1;33mtag: [m[1;33m1.3[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 20:21:14 2025 +0200
+
+    Release signed apk.
+
+[33mcommit 32215c37442fdd610c98504325fa3401f74ed455[m[33m ([m[1;33mtag: [m[1;33mv1.2[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 18:14:42 2025 +0200
+
+    Changed apk path.
+
+[33mcommit 0d44970795cb994b6ab34f853514879a2728f13e[m[33m ([m[1;33mtag: [m[1;33mv1.1[m[33m, [m[1;33mtag: [m[1;33mv1.0[m[33m)[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 17:58:37 2025 +0200
+
+    First release.
+
+[33mcommit aa3d9b4610892cada21986d1aa38ebf755ee5f99[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 14:52:09 2025 +0200
+
+    Broke down differen screens into own files.
+
+[33mcommit 1e4d7e0953712068529c9ee48d4c9bdb4d3b8541[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Sat Aug 9 13:59:14 2025 +0200
+
+    Added github workflow. Cleaned up repository.
+
+[33mcommit ef816a566fd6d38b6ab9f0a7ec2d5f106d0beb63[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Thu Aug 7 17:23:16 2025 +0200
+
+    Added big varity of words. UI improvements.
+
+[33mcommit 0e10a43100ddc511a3a1ba30d3d14011d440166d[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Wed Aug 6 19:37:55 2025 +0200
+
+    Implemented core functionalities.
+
+[33mcommit 0678c7d4410e26fc6294778dbc5cd18d99fe706d[m
+Author: leo lo <leo.pirker@lopis.de>
+Date:   Wed Aug 6 12:35:29 2025 +0200
+
+    Basic App implementation
